@@ -1,0 +1,55 @@
++h.headers
+- var scheme = null
+if site.configs.scheme == 1
+    scheme = 'muse'
+else if site.configs.scheme == 2
+    scheme = 'mist'
+else if site.configs.scheme == 3
+    scheme = 'pisces'
+else
+    scheme = 'muse'
+- var sidebar_position = null
+if site.configs.sidebar_position == 1
+    sidebar_position = 'left'
+else if site.configs.sidebar_position == 2
+    sidebar_position = 'right'
+else
+    sidebar_position = 'left'
+- var sidebar_display = null
+if site.configs.sidebar_display == 1
+    sidebar_display = 'post'
+else if site.configs.sidebar_display == 2
+    sidebar_display = 'always'
+else if site.configs.sidebar_display == 3
+    sidebar_display = 'hide'
+else if site.configs.sidebar_display == 4
+    sidebar_display = 'remove'
+else
+    sidebar_position = 'post'
++h.load('/template/source/css/%s.css'%scheme or 'muse')
++h.load('//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css')
++h.load('//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css')
+link(rel="shortcut icon", href=site.configs.favicon, type="image/x-icon")
+- var fancybox = null
+if site.configs.fancybox
+    fancybox = 'fancybox: true,'
+else
+    fancybox = 'fancybox: false,'
+- var motion = null
+if site.configs.motion
+    motion = 'motion: true'
+else
+    motion = 'motion: false'
+- var configuration =                               \
+'var NexT = window.Next || {};'                     \
++'var CONFIG = {'                                   \
++'scheme: "%s",'%scheme                             \
++'sidebar: {'                                       \
++'"position": "%s"'%sidebar_position                \
++','                                                \
++'"display": "%s"'%sidebar_display                  \
++'},'                                               \
++fancybox                                           \
++motion                                             \
++'};'
+script(type='text/javascript', id='hexo.configuration')= configuration

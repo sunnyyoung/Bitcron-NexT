@@ -1,0 +1,44 @@
+- var class_html = null
+if site.configs.motion
+    class_html = 'theme-next %s use-motion'%site.configs.scheme
+else
+    class_html = 'theme-next %s'%site.configs.scheme
+html(class=class_html)
+    head
+        block title
+        include layout/partials/head
+    body
+        - var sidebar_position = null
+        if site.configs.sidebar_position == 1
+            sidebar_position = 'left'
+        else if site.configs.sidebar_position == 2
+            sidebar_position = 'right'
+        - var container_class = 'container one-collum sidebar-position-%s'%sidebar_position
+        div(class='{{ container_class }} {% block page_class %}{% endblock %}')
+            .headband
+            header#header.header
+                .header-inner
+                    include layout/partials/header
+            main#main.main
+                .main-inner
+                    .content-wrap
+                        #content.content
+                            block content
+                        block comments
+                    if site.configs.sidebar_display != 4
+                        block sidebar
+            footer#footer.footer
+                .footer-inner
+                    include layout/partials/footer
+            .back-to-top
+                i.fa.fa-arrow-up
+        include layout/scripts/vendors
+        include layout/scripts/commons
+        include layout/scripts/bootstrap
+        if site.configs.scheme == 1
+            include layout/scripts/schemes/mist
+        else if site.configs.scheme == 2
+            include layout/scripts/schemes/muse
+        else if site.configs.scheme == 3
+            include layout/scripts/schemes/pisces
+        block script_extra
